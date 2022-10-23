@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<web-app>
+
+  <display-name>Spring JavaConfig Sample</display-name>
+
+  <servlet>
+    <servlet-name>mvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!-- mvc라는 이름의 DispatchServlet을 FrontController로 설정을 등록한다. !-->
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+      <!-- 실행시 AnnotationConfigWebApplicationContext를 사용 !-->
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>org.example.controller.WebMvcContextConfiguration</param-value>
+      <!-- DispatcherServlet이 실행될 때 설정들을 WebMvcContextConfiguration 설정파일을 읽어온다.
+      xml파일이 아니라 자바 config 파일 !-->
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mvc</servlet-name> <!--servlet name이 mvc인 이름을 찾아간다.(8로 이동 )   !-->
+    <url-pattern>/</url-pattern><!-- 모든 요청이 들어오면 servlet에 등록되어 있는 서블릿 클래스를 실행해라 !-->
+
+  </servlet-mapping>
+
+</web-app>
