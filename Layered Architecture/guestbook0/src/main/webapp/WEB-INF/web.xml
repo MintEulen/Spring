@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+  <display-name>Spring JavaConfig Sample</display-name>
+  <context-param>
+    <param-name>contextClass</param-name>
+    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+    </param-value>
+  </context-param>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>org.example.config.ApplicationConfig
+    </param-value>
+  </context-param>
+  <listener> <!-- 어떤 특정한 이벤트가 일어났을 때 동작한다. !-->
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    <!-- context가 로딩되는 이벤트가 발생하면 contextLoaderListener 라는 클래스를 수행 !-->
+  </listener>
+
+  <servlet>
+    <servlet-name>mvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+      <!-- DisPatcherServlet을 실행할때 webMvcContext~  설정 파일을 참고헤라  !-->
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>org.example.config.WebMvcContextConfiguration
+      </param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mvc</servlet-name>
+    <url-pattern>/</url-pattern>
+    <!-- 모든 요청 DisPatcherServlet이 받는다. !-->
+  </servlet-mapping>
+
+  <filter> <!-- 요청이 수행되기 전 한 번 걸쳐서 수행하는 부분 !-->
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <!-- 한글 인코딩 처리를 위한 부분 !-->
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern> <!-- 필터 적용 범위, /*은 모든 범위 !-->
+  </filter-mapping>
+</web-app>
